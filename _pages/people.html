@@ -1,0 +1,34 @@
+---
+layout: archive
+title: "People"
+permalink: /people/
+author_profile: true
+---
+
+{% assign groups = "Professors|Post-docs|System Engineers|Research Assistants|Student Assistants" | split: "|" %}
+{% for group in groups %}
+## {{ group }}
+{% assign members = site.people | where: "category", group %}
+<div class="people-list">
+  {% for person in members %}
+  <div class="archive__item">
+    {% if person.image or person.img %}
+      <div class="archive__item-teaser">
+        <img src="{% if person.image %}{{ person.image }}{% else %}{{ person.img }}{% endif %}" alt="{{ person.title }}">
+      </div>
+    {% endif %}
+    <div class="archive__item-body">
+      <h3 class="archive__item-title"><a href="{{ person.url | relative_url }}">{{ person.title }}</a></h3>
+      {% if person.role %}
+        <p class="archive__item-excerpt">{{ person.role }}</p>
+      {% elsif person.position %}
+        <p class="archive__item-excerpt">{{ person.position }}</p>
+      {% endif %}
+      {% if person.excerpt %}
+        <p class="archive__item-excerpt">{{ person.excerpt | markdownify }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endfor %}
