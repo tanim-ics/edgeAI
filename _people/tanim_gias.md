@@ -4,7 +4,7 @@ kind: person
 title: Tanim M. Rayhan Gias
 identifier: tmrg
 permalink: /people/tanim_gias
-img: assets/img/P-Tanim_Gias.jpg
+img: assets/img/P_Tanim_Gias.jpg
 position: sysad
 office: ICT 3W05
 ORCID: 0009-0006-3083-3259
