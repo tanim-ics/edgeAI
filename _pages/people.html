@@ -1,34 +1,192 @@
 ---
-layout: archive
+layout: people
 title: "People"
 permalink: /people/
 author_profile: true
 ---
 
-{% assign groups = "Professors|Post-docs|System Engineers|Research Assistants|Student Assistants" | split: "|" %}
-{% for group in groups %}
-## {{ group }}
-{% assign members = site.people | where: "category", group %}
-<div class="people-list">
-  {% for person in members %}
-  <div class="archive__item">
-    {% if person.image or person.img %}
-      <div class="archive__item-teaser">
-        <img src="{% if person.image %}{{ person.image }}{% else %}{{ person.img }}{% endif %}" alt="{{ person.title }}">
+
+{% comment %}
+  If people have categories, group them. Otherwise, show all people together.
+{% endcomment %}
+
+{% assign all_people = site.people %}
+{% assign has_categories = false %}
+
+{% for person in all_people %}
+  {% if person.category %}
+    {% assign has_categories = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if has_categories %}
+  {% assign groups = "Professors|Post-docs|System Engineers|Research Assistants|Student Assistants" | split: "|" %}
+  
+  {% for group in groups %}
+    {% assign members = site.people | where: "category", group %}
+    {% if members.size > 0 %}
+      <div class="group-section">
+        <h2 class="group-title">{{ group }}</h2>
+        <div class="people-container">
+          {% for person in members %}
+            <div class="person-card">
+              {% if person.image or person.img %}
+                <img class="person-card__image" 
+                     src="{% if person.image %}{{ person.image | relative_url }}{% else %}{{ person.img | relative_url }}{% endif %}" 
+                     alt="{{ person.title }}"
+                     onerror="this.style.display='none'">
+              {% endif %}
+              
+              <div class="person-card__content">
+                <h3 class="person-card__name">
+                  <a href="{{ person.url | relative_url }}">{{ person.title }}</a>
+                </h3>
+                
+                {% if person.position %}
+                  <div class="person-card__position">
+                    {% case person.position %}
+                      {% when "sysad" %}
+                        System Administrator
+                      {% when "postdoc" %}
+                        Post-doctoral Researcher
+                      {% when "professor" %}
+                        Professor
+                      {% when "ra" %}
+                        Research Assistant
+                      {% when "sa" %}
+                        Student Assistant
+                      {% else %}
+                        {{ person.position }}
+                    {% endcase %}
+                  </div>
+                {% endif %}
+                
+                {% if person.excerpt %}
+                  <div class="person-card__details">
+                    {{ person.excerpt | markdownify }}
+                  </div>
+                {% endif %}
+                
+                {% if person.interests %}
+                  <div class="person-card__interests">
+                    <div class="person-card__interests-title">Research Interests</div>
+                    <div class="person-card__interests-list">
+                      {% for interest in person.interests limit:3 %}
+                        <span class="interest-tag">{{ interest }}</span>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+                
+                <div class="person-card__contact">
+                  {% if person.email %}
+                    <div class="contact-item">
+                      <span>📧</span>
+                      <a href="mailto:{{ person.email }}">Email</a>
+                    </div>
+                  {% endif %}
+                  
+                  {% if person.office %}
+                    <div class="contact-item">
+                      <span>📍</span>
+                      <span>{{ person.office }}</span>
+                    </div>
+                  {% endif %}
+                  
+                  {% if person.ORCID %}
+                    <div class="contact-item">
+                      <span>🔗</span>
+                      <a href="https://orcid.org/{{ person.ORCID }}" target="_blank">ORCID</a>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
       </div>
     {% endif %}
-    <div class="archive__item-body">
-      <h3 class="archive__item-title"><a href="{{ person.url | relative_url }}">{{ person.title }}</a></h3>
-      {% if person.role %}
-        <p class="archive__item-excerpt">{{ person.role }}</p>
-      {% elsif person.position %}
-        <p class="archive__item-excerpt">{{ person.position }}</p>
-      {% endif %}
-      {% if person.excerpt %}
-        <p class="archive__item-excerpt">{{ person.excerpt | markdownify }}</p>
-      {% endif %}
-    </div>
-  </div>
   {% endfor %}
-</div>
-{% endfor %}
+{% else %}
+  {% comment %}
+    If no categories are defined, show all people in one grid
+  {% endcomment %}
+  <div class="people-container">
+    {% for person in all_people %}
+      <div class="person-card">
+        {% if person.image or person.img %}
+          <img class="person-card__image" 
+               src="{% if person.image %}{{ person.image | relative_url }}{% else %}{{ person.img | relative_url }}{% endif %}" 
+               alt="{{ person.title }}"
+               onerror="this.style.display='none'">
+        {% endif %}
+        
+        <div class="person-card__content">
+          <h3 class="person-card__name">
+            <a href="{{ person.url | relative_url }}">{{ person.title }}</a>
+          </h3>
+          
+          {% if person.position %}
+            <div class="person-card__position">
+              {% case person.position %}
+                {% when "sysad" %}
+                  System Administrator
+                {% when "postdoc" %}
+                  Post-doctoral Researcher
+                {% when "professor" %}
+                  Professor
+                {% when "ra" %}
+                  Research Assistant
+                {% when "sa" %}
+                  Student Assistant
+                {% else %}
+                  {{ person.position }}
+              {% endcase %}
+            </div>
+          {% endif %}
+          
+          {% if person.excerpt %}
+            <div class="person-card__details">
+              {{ person.excerpt | markdownify }}
+            </div>
+          {% endif %}
+          
+          {% if person.interests %}
+            <div class="person-card__interests">
+              <div class="person-card__interests-title">Research Interests</div>
+              <div class="person-card__interests-list">
+                {% for interest in person.interests limit:3 %}
+                  <span class="interest-tag">{{ interest }}</span>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+          
+          <div class="person-card__contact">
+            {% if person.email %}
+              <div class="contact-item">
+                <span>📧</span>
+                <a href="mailto:{{ person.email }}">Email</a>
+              </div>
+            {% endif %}
+            
+            {% if person.office %}
+              <div class="contact-item">
+                <span>📍</span>
+                <span>{{ person.office }}</span>
+              </div>
+            {% endif %}
+            
+            {% if person.ORCID %}
+              <div class="contact-item">
+                <span>🔗</span>
+                <a href="https://orcid.org/{{ person.ORCID }}" target="_blank">ORCID</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
