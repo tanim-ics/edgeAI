@@ -1,11 +1,13 @@
 ---
+layout: people
 cv_ready: true
 kind: person
 title: Tanim M. Rayhan Gias
 identifier: tmrg
 permalink: /people/tanim_gias
-img: P_Tanim_Gias.jpg
+img: assets/img/P_Tanim_Gias.jpg
 position: sysad
+category: System Engineers
 office: ICT 3W05
 ORCID: 0009-0006-3083-3259
 email: tm-rayhan.gias@uibk.ac.at
