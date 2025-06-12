@@ -5,6 +5,7 @@ layout: default
 {% include base_path %}
 
 <style>
+/* People listing page styles */
 .people-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -23,16 +24,65 @@ layout: default
   flex-direction: column;
 }
 
+html[data-theme="dark"] .person-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 .person-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-.person-card__image {
+html[data-theme="dark"] .person-card:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.person-card__image-container {
   width: 100%;
-  height: 250px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+}
+
+html[data-theme="dark"] .person-card__image-container {
+  background-color: #1a1a1a;
+}
+
+.person-card__image {
+  width: 150px;
+  height: 150px;
   object-fit: cover;
-  background-color: #f0f0f0;
+  object-position: center top;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="dark"] .person-card__image {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.person-card__image-placeholder {
+  width: 150px;
+  height: 150px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: #999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="dark"] .person-card__image-placeholder {
+  background-color: #2a2a2a;
+  color: #666;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .person-card__content {
@@ -47,10 +97,19 @@ layout: default
   font-weight: 600;
   margin: 0 0 0.5rem 0;
   color: #333;
+  text-align: center;
+}
+
+html[data-theme="dark"] .person-card__name {
+  color: #ffffff;
 }
 
 .person-card:hover .person-card__name {
   color: #0066cc;
+}
+
+html[data-theme="dark"] .person-card:hover .person-card__name {
+  color: #4da6ff;
 }
 
 .person-card__position {
@@ -58,6 +117,11 @@ layout: default
   color: #666;
   margin-bottom: 1rem;
   font-weight: 500;
+  text-align: center;
+}
+
+html[data-theme="dark"] .person-card__position {
+  color: #cccccc;
 }
 
 .person-card__details {
@@ -67,10 +131,18 @@ layout: default
   flex-grow: 1;
 }
 
+html[data-theme="dark"] .person-card__details {
+  color: #dddddd;
+}
+
 .person-card__interests {
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid #eee;
+}
+
+html[data-theme="dark"] .person-card__interests {
+  border-top: 1px solid #444;
 }
 
 .person-card__interests-title {
@@ -80,18 +152,15 @@ layout: default
   margin-bottom: 0.5rem;
 }
 
+html[data-theme="dark"] .person-card__interests-title {
+  color: #ffffff;
+}
+
 .person-card__interests-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.interest-tag {
-  background-color: #f0f4f8;
-  color: #4a5568;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  justify-content: center;
 }
 
 .person-card__contact {
@@ -101,23 +170,11 @@ layout: default
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
-.contact-item {
-  font-size: 0.85rem;
-  color: #666;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.contact-item a {
-  color: #0066cc;
-  text-decoration: none;
-}
-
-.contact-item a:hover {
-  text-decoration: underline;
+html[data-theme="dark"] .person-card__contact {
+  border-top: 1px solid #444;
 }
 
 .group-section {
@@ -132,156 +189,89 @@ layout: default
   border-bottom: 2px solid #e0e0e0;
 }
 
+html[data-theme="dark"] .group-title {
+  color: #ffffff;
+  border-bottom: 2px solid #444;
+}
+
+.person-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Shared styles for both listing and individual pages */
+.interest-tag {
+  background-color: #f0f4f8;
+  color: #4a5568;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+html[data-theme="dark"] .interest-tag {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+}
+
+.contact-item {
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+html[data-theme="dark"] .contact-item {
+  color: #cccccc;
+}
+
+.contact-item a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+html[data-theme="dark"] .contact-item a {
+  color: #4da6ff;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .people-container {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
+  
+  .person-card__image-container {
+    height: 180px;
+  }
+  
+  .person-card__image,
+  .person-card__image-placeholder {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .person-card__image-placeholder {
+    font-size: 3rem;
+  }
 }
 </style>
-
 
 <div id="main" role="main">
   {% include sidebar.html %}
 
-  <article class="page person-page" itemscope itemtype="http://schema.org/Person">
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <div class="page__inner-wrap">
-      
-      <div class="person-header">
-        {% if page.img or page.image %}
-          <div>
-            <img class="person-image" 
-                 src="{% if page.image %}{{ page.image | relative_url }}{% else %}{{ page.img | relative_url }}{% endif %}" 
-                 alt="{{ page.title }}"
-                 itemprop="image">
-          </div>
-        {% endif %}
-        
-        <div class="person-info">
-          <h1 itemprop="name">{{ page.title }}</h1>
-          
-          {% if page.position %}
-            <div class="person-position" itemprop="jobTitle">
-              {% case page.position %}
-                {% when "sysad" %}
-                  System Administrator
-                {% when "postdoc" %}
-                  Post-doctoral Researcher
-                {% when "professor" %}
-                  Professor
-                {% when "ra" %}
-                  Research Assistant
-                {% when "sa" %}
-                  Student Assistant
-                {% else %}
-                  {{ page.position }}
-              {% endcase %}
-            </div>
-          {% endif %}
-          
-          <div class="person-contact">
-            {% if page.email %}
-              <div class="contact-item">
-                <span>📧</span>
-                <a href="mailto:{{ page.email }}" itemprop="email">{{ page.email }}</a>
-              </div>
-            {% endif %}
-            
-            {% if page.office %}
-              <div class="contact-item">
-                <span>📍</span>
-                <span itemprop="workLocation">{{ page.office }}</span>
-              </div>
-            {% endif %}
-            
-            {% if page.address %}
-              <div class="contact-item">
-                <span>🏢</span>
-                <span itemprop="address">{{ page.address }}</span>
-              </div>
-            {% endif %}
-            
-            {% if page.ORCID %}
-              <div class="contact-item">
-                <span>🔗</span>
-                <a href="https://orcid.org/{{ page.ORCID }}" target="_blank">ORCID: {{ page.ORCID }}</a>
-              </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-
-      {% if page.interests %}
-        <section class="person-section">
-          <h2>Research Interests</h2>
-          <div class="interests-list">
-            {% for interest in page.interests %}
-              <span class="interest-tag">{{ interest }}</span>
-            {% endfor %}
-          </div>
-        </section>
-      {% endif %}
-
-      {% if page.positions %}
-        <section class="person-section">
-          <h2>Positions</h2>
-          {% for position in page.positions %}
-            <div class="position-item">
-              <div class="position-dates">
-                {{ position.from }}{% if position.to %} - {{ position.to }}{% else %} - Present{% endif %}
-              </div>
-              <div class="position-title">{{ position.title }}</div>
-              <div class="position-details">
-                {% if position.dep %}
-                  {% if position.dep_uri %}
-                    <a href="{{ position.dep_uri }}" target="_blank">{{ position.dep }}</a>
-                  {% else %}
-                    {{ position.dep }}
-                  {% endif %}
-                  <br>
-                {% endif %}
-                {% if position.inst %}
-                  {% if position.inst_uri %}
-                    <a href="{{ position.inst_uri }}" target="_blank">{{ position.inst }}</a>
-                  {% else %}
-                    {{ position.inst }}
-                  {% endif %}
-                  {% if position.where %}, {{ position.where }}{% endif %}
-                {% endif %}
-              </div>
-            </div>
-          {% endfor %}
-        </section>
-      {% endif %}
-
-      {% if page.education %}
-        <section class="person-section">
-          <h2>Education</h2>
-          {% for edu in page.education %}
-            <div class="position-item">
-              <div class="position-dates">
-                {{ edu.from }}{% if edu.to %} - {{ edu.to }}{% endif %}
-              </div>
-              <div class="position-title">{{ edu.title }}</div>
-              <div class="position-details">
-                {% if edu.inst %}
-                  {% if edu.inst_uri %}
-                    <a href="{{ edu.inst_uri }}" target="_blank">{{ edu.inst }}</a>
-                  {% else %}
-                    {{ edu.inst }}
-                  {% endif %}
-                  {% if edu.where %}, {{ edu.where }}{% endif %}
-                {% endif %}
-              </div>
-            </div>
-          {% endfor %}
-        </section>
-      {% endif %}
+      <header>
+        <h1 class="page__title" itemprop="headline">{{ page.title }}</h1>
+      </header>
 
       <section class="page__content" itemprop="text">
         {{ content }}
       </section>
-
     </div>
   </article>
 </div>

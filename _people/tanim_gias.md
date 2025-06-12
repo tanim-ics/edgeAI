@@ -1,11 +1,11 @@
 ---
-layout: people
+layout: person
 cv_ready: true
 kind: person
 title: Tanim M. Rayhan Gias
 identifier: tmrg
 permalink: /people/tanim_gias
-img: assets/img/P_Tanim_Gias.jpg
+img: /assets/img/P_Tanim_Gias.jpg
 position: sysad
 category: System Engineers
 office: ICT 3W05
